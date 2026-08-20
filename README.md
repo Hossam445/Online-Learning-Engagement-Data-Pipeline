@@ -136,6 +136,31 @@ Spark writes four Parquet outputs to `/output/online-learning/`:
 - `study_engagement` — average engagement by study-hours bucket (low / medium / high).
 - `student_activity` — per-student activity summary (logins, session duration, assignments, forum posts).
 
+## Output Content
+
+To inspect the Parquet output produced by Spark:
+
+```bash
+docker compose exec spark pyspark
+```
+
+Then, in the PySpark shell:
+
+```python
+df = spark.read.parquet("hdfs://namenode:8020/output/online-learning/device_analysis")
+df.show()
+```
+
+The same approach can be used to inspect the other outputs under `/output/online-learning/`:
+
+```text
+device_analysis
+country_analysis
+study_engagement
+student_activity
+```
+
+
 ## Troubleshooting
 
 - **A container restarts right after startup** — the first run formats HDFS; give the NameNode and DataNode a minute to come up healthy.
